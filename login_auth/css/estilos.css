@@ -1,0 +1,222 @@
+/* ==========================================================================
+   Estilos Globales y Reinicio con Gradiente de Fondo
+   ========================================================================== */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+body {
+    /* Gradiente moderno y suave para el fondo general */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #333;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    padding: 20px;
+}
+
+/* ==========================================================================
+   Contenedor Principal (Tarjetas/Card)
+   ========================================================================== */
+.container, .panel-container {
+    background: #ffffff;
+    width: 100%;
+    max-width: 450px;
+    padding: 40px 30px;
+    border-radius: 16px; /* Bordes ligeramente más suaves */
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* Sombra más profunda por el fondo oscuro */
+    text-align: center;
+}
+
+/* Ajuste para el panel que suele ser más ancho */
+.panel-container {
+    max-width: 600px;
+}
+
+/* ==========================================================================
+   Tipografía y Títulos
+   ========================================================================== */
+h1, h2 {
+    color: #1a202c;
+    font-weight: 700;
+    margin-bottom: 10px;
+}
+
+h1 { font-size: 26px; }
+h2 { font-size: 20px; color: #4a5568; }
+
+p {
+    color: #718096;
+    font-size: 15px;
+    line-height: 1.6;
+    margin-bottom: 25px;
+}
+
+hr {
+    border: 0;
+    height: 1px;
+    background: #e2e8f0;
+    margin: 25px 0;
+}
+
+/* ==========================================================================
+   Formularios y Elementos de Entrada
+   ========================================================================== */
+form {
+    text-align: left;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+label {
+    display: block;
+    font-size: 14px;
+    font-weight: 600;
+    color: #4a5568;
+    margin-bottom: 8px;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"] {
+    width: 100%;
+    padding: 12px 16px;
+    border: 1.5px solid #cbd5e0;
+    border-radius: 8px;
+    font-size: 15px;
+    color: #2d3748;
+    transition: all 0.3s ease;
+    background-color: #f8fafc;
+}
+
+input:focus {
+    outline: none;
+    border-color: #667eea;
+    background-color: #ffffff;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+}
+
+/* Entrada especial para los códigos numéricos 2FA */
+.input-code {
+    display: block;
+    margin: 0 auto 20px auto;
+    width: 80%;
+    padding: 12px;
+    font-size: 24px;
+    font-weight: 700;
+    letter-spacing: 4px;
+    text-align: center;
+    border: 2px solid #cbd5e0;
+    border-radius: 8px;
+    background: #f8fafc;
+}
+
+.input-code:focus {
+    border-color: #764ba2;
+    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+}
+
+/* ==========================================================================
+   Botones y Enlaces Action con Gradientes Interactivos
+   ========================================================================== */
+.btn, button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 14px;
+    /* Gradiente vivo que combina con el fondo */
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    color: #ffffff;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    text-align: center;
+    text-decoration: none;
+    box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+}
+
+.btn:hover, button[type="submit"]:hover {
+    /* Efecto de brillo al pasar el cursor invirtiendo levemente la intensidad */
+    background: linear-gradient(135deg, #5a73e8 0%, #6b3fa9 100%);
+    box-shadow: 0 6px 16px rgba(118, 75, 162, 0.4);
+}
+
+.btn:active, button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+/* Enlaces y botones secundarios o de regreso */
+.btn-regresar {
+    display: inline-block;
+    margin-top: 15px;
+    color: #764ba2;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: color 0.2s ease;
+}
+
+.btn-regresar:hover {
+    color: #667eea;
+    text-decoration: underline;
+}
+
+/* Botón Destructivo / Cerrar Sesión con Gradiente Cálido */
+.btn-logout {
+    display: inline-block;
+    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
+    color: #ffffff;
+    padding: 12px 24px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-size: 14px;
+    font-weight: 600;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(255, 75, 43, 0.2);
+}
+
+.btn-logout:hover {
+    background: linear-gradient(135deg, #f8305d 0%, #f03e1e 100%);
+    box-shadow: 0 6px 16px rgba(255, 75, 43, 0.3);
+}
+
+/* Enlaces de alternancia (ir a registrarse / iniciar sesión) */
+.form-footer {
+    margin-top: 20px;
+    text-align: center;
+    font-size: 14px;
+    color: #718096;
+}
+
+.form-footer a {
+    color: #764ba2;
+    text-decoration: none;
+    font-weight: 600;
+}
+
+.form-footer a:hover {
+    color: #667eea;
+    text-decoration: underline;
+}
+
+/* ==========================================================================
+   Imágenes y Multimedia (Códigos QR)
+   ========================================================================== */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 12px;
+    border: 1px solid #e2e8f0;
+    padding: 12px;
+    background: #f8fafc;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+}
