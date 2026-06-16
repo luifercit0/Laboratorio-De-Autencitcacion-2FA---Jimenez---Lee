@@ -8,14 +8,13 @@ class mod_db
     private $total;
     private $pagecut_query;
     private $debug = false; 
-
+    //SHOW GRANTS FOR 'root'@'localhost';
     public function __construct()
     {
-        ##### Parámetros de Conexión de tu WampServer #####
         $sql_host = "localhost";
         $sql_name = "company_info";
         $sql_user = "root"; 
-        $sql_pass = "luifer123"; // Tu clave local configurada
+        $sql_pass = "luifer123";
 
         $dsn = "mysql:host=$sql_host;dbname=$sql_name;charset=utf8mb4";
         try {
@@ -50,7 +49,7 @@ class mod_db
         }
     }
 
-    // Método crucial para registrar usuarios e intentos de forma segura
+    // Registrar usuarios e intentos
     public function insertSeguro($tb_name, $data)
     {
         $columns = implode(", ", array_keys($data));
@@ -78,7 +77,7 @@ class mod_db
         return $this->executeQuery($string);
     }
 
-    // Busca un usuario de forma segura mitigando Inyección SQL
+    // Buscar un usuario
     public function log($Usuario){
          try {
              $sql = "SELECT * FROM usuarios WHERE Usuario = :User";
@@ -145,15 +144,11 @@ class mod_db
             $stmt = $this->conexion->prepare($sql);
             $stmt->execute();
             
-            // --- REQUERIMIENTO DEL ANEXO: Guardar en archivo físico .log ---
-            // Esto creará un archivo llamado 'auditoria_eventos.log' en la raíz de tu proyecto
             $mensajeLog = "[" . date('Y-m-d H:i:s') . "] Query ejecutada con éxito: " . $sql . "\n";
             error_log($mensajeLog, 3, "auditoria_eventos.log");
-            // ---------------------------------------------------------------
             
             return $stmt;
         } catch (PDOException $e) {
-            // También registramos el error en el archivo .log
             $mensajeError = "[" . date('Y-m-d H:i:s') . "] ERROR SQL: " . $e->getMessage() . "\n";
             error_log($mensajeError, 3, "auditoria_eventos.log");
             

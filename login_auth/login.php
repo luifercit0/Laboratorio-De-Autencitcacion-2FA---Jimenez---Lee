@@ -1,8 +1,12 @@
+<?php
+session_start();
+require_once 'clases/AntiCSRF.php';
+?>
 <!DOCTYPE html>
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <title>Iniciar Sesión - Laboratorio #1</title>
+    <title>Iniciar Sesión</title>
     <link rel="stylesheet" href="css/estilos.css">
 </head>
 <body>
@@ -12,6 +16,7 @@
     <p>Ingresa al sistema de forma segura</p>
     
     <form action="verificar_login.php" method="POST">
+        <?php echo AntiCSRF::campoHidden(); ?>
         <div class="form-group">
             <label for="usuario">Usuario:</label>
             <input type="text" id="usuario" name="usuario" required>

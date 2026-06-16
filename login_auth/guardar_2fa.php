@@ -1,7 +1,20 @@
 <?php
 session_start();
 
-if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['user']) || !isset($_SESSION['temp_secret'])) {
+if (!isset($_SESSION['user'])) {
+    header("Location: login.php");
+    exit;
+}
+
+require_once 'clases/AntiCSRF.php';
+
+if (!AntiCSRF::verificarSilencioso()) {
+    $_SESSION['error_2fa'] = 'Token no válido. Por favor vuelve a escanear el QR.';
+    header("Location: configurar_2fa.php");
+    exit;
+}
+
+if ($_SERVER['REQUEST_METHOD'] !== 'POST' || !isset($_SESSION['temp_secret'])) {
     header("Location: configurar_2fa.php");
     exit;
 }
@@ -14,26 +27,19 @@ use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 $db = new mod_db();
 $g = new GoogleAuthenticator();
 
-$usuario = $_SESSION['user'];
+$usuario        = $_SESSION['user'];
 $secretTemporal = $_SESSION['temp_secret'];
 $codigoIntroducido = trim($_POST['codigo_verificacion']);
 
-// Verificamos si el código ingresado por el usuario es correcto para ese secreto
 if ($g->checkCode($secretTemporal, $codigoIntroducido)) {
-    
-    // El código es válido, procedemos a guardar el secreto en la base de datos de manera definitiva
     try {
         $pdo = $db->getConexion();
         $sql = "UPDATE usuarios SET secret_2fa = :secret WHERE Usuario = :user";
         $stmt = $pdo->prepare($sql);
-        $stmt->execute([
-            ':secret' => $secretTemporal,
-            ':user'   => $usuario
-        ]);
-        
-        // Limpiamos la variable temporal de la sesión
+        $stmt->execute([':secret' => $secretTemporal, ':user' => $usuario]);
+
         unset($_SESSION['temp_secret']);
-        
+
         echo "<script>
                 alert('¡2FA activado con éxito en tu cuenta!');
                 window.location.href = 'configurar_2fa.php';
@@ -43,9 +49,8 @@ if ($g->checkCode($secretTemporal, $codigoIntroducido)) {
         echo "Error al guardar el segundo factor: " . $e->getMessage();
     }
 } else {
-    // Si el código falló o expiró (recuerda que cambia cada 30 segundos)
     echo "<script>
-            alert('Código inválido o expirado. Por favor, vuelve a intentarlo asegurándote de que la hora de tu PC y celular estén sincronizados.');
+            alert('Código inválido o expirado. Asegúrate de que la hora de tu PC y celular estén sincronizados.');
             window.location.href = 'configurar_2fa.php';
           </script>";
     exit;

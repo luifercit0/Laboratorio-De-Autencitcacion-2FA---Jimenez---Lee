@@ -1,14 +1,17 @@
 <?php
 session_start();
 
+require_once 'clases/AntiCSRF.php';
 require_once 'clases/Logger.php';
 require_once 'clases/mod_db.PHP'; 
 require_once 'clases/SanitizarEntrada.PHP';
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
-    header("Location: login.html");
+    header("Location: login.php");
     exit;
 }
+
+AntiCSRF::verificar();
 
 $userInput = SanitizarEntrada::limpiarCadena($_POST['usuario']);
 $passInput = $_POST['password'];
@@ -49,7 +52,7 @@ if ($usuarioData) {
         ];
         $db->insertSeguro('intentos_login', $logData);
 
-        echo "<script>alert('Credenciales incorrectas.'); window.location.href='login.html';</script>";
+        echo "<script>alert('Credenciales incorrectas.'); window.location.href='login.php';</script>";
         exit;
     }
 } else {
@@ -63,7 +66,7 @@ if ($usuarioData) {
     ];
     $db->insertSeguro('intentos_login', $logData);
 
-    echo "<script>alert('Credenciales incorrectas.'); window.location.href='login.html';</script>";
+    echo "<script>alert('Credenciales incorrectas.'); window.location.href='login.php';</script>";
     exit;
 }
 ?>

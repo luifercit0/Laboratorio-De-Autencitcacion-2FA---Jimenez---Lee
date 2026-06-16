@@ -3,10 +3,11 @@
 session_start();
 
 if (!isset($_SESSION['auth_usuario_temporal'])) {
-    header("Location: login.html");
+    header("Location: login.php");
     exit;
 }
 
+require_once 'clases/AntiCSRF.php';
 require_once 'clases/mod_db.PHP';
 require_once 'vendor/autoload.php';
 
@@ -15,6 +16,7 @@ use Sonata\GoogleAuthenticator\GoogleAuthenticator;
 $mensaje = '';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+    AntiCSRF::verificar();
     $db = new mod_db();
     $g = new GoogleAuthenticator();
     
@@ -52,6 +54,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     <?php echo $mensaje; ?>
     
     <form action="verificar_2fa.php" method="POST">
+        <?php echo AntiCSRF::campoHidden(); ?>
         <input type="text" name="codigo_totp" placeholder="000000" class="input-code" required autocomplete="off">
         <button type="submit">Verificar e Ingresar</button>
     </form>

@@ -1,17 +1,39 @@
 /* ==========================================================================
-   Estilos Globales y Reinicio con Gradiente de Fondo
+   VS Code Dark Theme — Variables de color
+   ========================================================================== */
+:root {
+    --bg-app:        #1e1e1e;
+    --bg-card:       #252526;
+    --bg-input:      #3c3c3c;
+    --bg-input-focus:#2d2d2d;
+    --border:        #3e3e42;
+    --border-focus:  #007acc;
+    --accent:        #007acc;
+    --accent-hover:  #005f9e;
+    --accent-glow:   rgba(0, 122, 204, 0.25);
+    --text-primary:  #d4d4d4;
+    --text-secondary:#9d9d9d;
+    --text-label:    #cccccc;
+    --text-heading:  #ffffff;
+    --danger:        #f44747;
+    --success:       #4ec9b0;
+    --logout-bg:     #6a1313;
+    --logout-hover:  #8b1a1a;
+}
+
+/* ==========================================================================
+   Reset y Base
    ========================================================================== */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-family: 'Consolas', 'Courier New', monospace;
 }
 
 body {
-    /* Gradiente moderno y suave para el fondo general */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-    color: #333;
+    background-color: var(--bg-app);
+    color: var(--text-primary);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,51 +42,63 @@ body {
 }
 
 /* ==========================================================================
-   Contenedor Principal (Tarjetas/Card)
+   Contenedor Principal (Card)
    ========================================================================== */
 .container, .panel-container {
-    background: #ffffff;
+    background: var(--bg-card);
     width: 100%;
-    max-width: 450px;
-    padding: 40px 30px;
-    border-radius: 16px; /* Bordes ligeramente más suaves */
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2); /* Sombra más profunda por el fondo oscuro */
+    max-width: 460px;
+    padding: 40px 36px;
+    border-radius: 6px;
+    border: 1px solid var(--border);
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6);
     text-align: center;
 }
 
-/* Ajuste para el panel que suele ser más ancho */
 .panel-container {
-    max-width: 600px;
+    max-width: 620px;
+}
+
+/* Línea de acento superior estilo VS Code activity bar */
+.container::before, .panel-container::before {
+    content: '';
+    display: block;
+    height: 3px;
+    background: var(--accent);
+    border-radius: 6px 6px 0 0;
+    margin: -40px -36px 32px -36px;
 }
 
 /* ==========================================================================
-   Tipografía y Títulos
+   Tipografía
    ========================================================================== */
 h1, h2 {
-    color: #1a202c;
-    font-weight: 700;
-    margin-bottom: 10px;
+    color: var(--text-heading);
+    font-weight: 600;
+    margin-bottom: 8px;
+    letter-spacing: 0.5px;
 }
 
-h1 { font-size: 26px; }
-h2 { font-size: 20px; color: #4a5568; }
+h1 { font-size: 22px; }
+h2 { font-size: 17px; color: var(--text-secondary); font-weight: 400; }
 
 p {
-    color: #718096;
-    font-size: 15px;
+    color: var(--text-secondary);
+    font-size: 13px;
     line-height: 1.6;
-    margin-bottom: 25px;
+    margin-bottom: 24px;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 hr {
     border: 0;
     height: 1px;
-    background: #e2e8f0;
-    margin: 25px 0;
+    background: var(--border);
+    margin: 24px 0;
 }
 
 /* ==========================================================================
-   Formularios y Elementos de Entrada
+   Formularios
    ========================================================================== */
 form {
     text-align: left;
@@ -72,151 +106,182 @@ form {
 }
 
 .form-group {
-    margin-bottom: 20px;
+    margin-bottom: 18px;
 }
 
 label {
     display: block;
-    font-size: 14px;
-    font-weight: 600;
-    color: #4a5568;
-    margin-bottom: 8px;
+    font-size: 12px;
+    font-weight: 500;
+    color: var(--text-label);
+    margin-bottom: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    font-family: 'Segoe UI', sans-serif;
 }
 
 input[type="text"],
 input[type="email"],
-input[type="password"] {
+input[type="password"],
+input[type="number"],
+select {
     width: 100%;
-    padding: 12px 16px;
-    border: 1.5px solid #cbd5e0;
-    border-radius: 8px;
-    font-size: 15px;
-    color: #2d3748;
-    transition: all 0.3s ease;
-    background-color: #f8fafc;
+    padding: 10px 14px;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    font-size: 14px;
+    color: var(--text-primary);
+    font-family: 'Consolas', monospace;
+    transition: border-color 0.2s ease, box-shadow 0.2s ease;
+    appearance: none;
+    -webkit-appearance: none;
 }
 
-input:focus {
+select {
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath fill='%239d9d9d' d='M6 8L0 0h12z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 14px center;
+    padding-right: 36px;
+    cursor: pointer;
+}
+
+select option {
+    background: var(--bg-input);
+    color: var(--text-primary);
+}
+
+input:focus,
+select:focus {
     outline: none;
-    border-color: #667eea;
-    background-color: #ffffff;
-    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.2);
+    border-color: var(--border-focus);
+    background: var(--bg-input-focus);
+    box-shadow: 0 0 0 2px var(--accent-glow);
 }
 
-/* Entrada especial para los códigos numéricos 2FA */
+input::placeholder {
+    color: #555555;
+}
+
+/* Código 2FA */
 .input-code {
     display: block;
     margin: 0 auto 20px auto;
     width: 80%;
     padding: 12px;
-    font-size: 24px;
+    font-size: 26px;
     font-weight: 700;
-    letter-spacing: 4px;
+    letter-spacing: 6px;
     text-align: center;
-    border: 2px solid #cbd5e0;
-    border-radius: 8px;
-    background: #f8fafc;
+    background: var(--bg-input);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    color: var(--success);
 }
 
 .input-code:focus {
-    border-color: #764ba2;
-    box-shadow: 0 0 0 3px rgba(118, 75, 162, 0.2);
+    border-color: var(--border-focus);
+    box-shadow: 0 0 0 2px var(--accent-glow);
+    outline: none;
 }
 
 /* ==========================================================================
-   Botones y Enlaces Action con Gradientes Interactivos
+   Botones
    ========================================================================== */
 .btn, button[type="submit"] {
     display: block;
     width: 100%;
-    padding: 14px;
-    /* Gradiente vivo que combina con el fondo */
-    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 11px;
+    background: var(--accent);
     color: #ffffff;
     border: none;
-    border-radius: 8px;
-    font-size: 16px;
+    border-radius: 4px;
+    font-size: 14px;
     font-weight: 600;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: background 0.2s ease, box-shadow 0.2s ease;
     text-align: center;
     text-decoration: none;
-    box-shadow: 0 4px 12px rgba(118, 75, 162, 0.3);
+    font-family: 'Segoe UI', sans-serif;
+    letter-spacing: 0.3px;
+    margin-top: 6px;
 }
 
 .btn:hover, button[type="submit"]:hover {
-    /* Efecto de brillo al pasar el cursor invirtiendo levemente la intensidad */
-    background: linear-gradient(135deg, #5a73e8 0%, #6b3fa9 100%);
-    box-shadow: 0 6px 16px rgba(118, 75, 162, 0.4);
+    background: var(--accent-hover);
+    box-shadow: 0 2px 10px var(--accent-glow);
 }
 
 .btn:active, button[type="submit"]:active {
-    transform: scale(0.98);
+    transform: scale(0.99);
 }
 
-/* Enlaces y botones secundarios o de regreso */
 .btn-regresar {
     display: inline-block;
-    margin-top: 15px;
-    color: #764ba2;
+    margin-top: 16px;
+    color: var(--accent);
     text-decoration: none;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: 'Segoe UI', sans-serif;
     transition: color 0.2s ease;
 }
 
 .btn-regresar:hover {
-    color: #667eea;
+    color: #3dbde6;
     text-decoration: underline;
 }
 
-/* Botón Destructivo / Cerrar Sesión con Gradiente Cálido */
 .btn-logout {
     display: inline-block;
-    background: linear-gradient(135deg, #ff416c 0%, #ff4b2b 100%);
-    color: #ffffff;
-    padding: 12px 24px;
-    border-radius: 8px;
+    background: var(--logout-bg);
+    color: #f0a0a0;
+    padding: 10px 22px;
+    border-radius: 4px;
     text-decoration: none;
-    font-size: 14px;
+    font-size: 13px;
     font-weight: 600;
-    transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(255, 75, 43, 0.2);
+    transition: background 0.2s ease;
+    font-family: 'Segoe UI', sans-serif;
+    border: 1px solid #8b2020;
 }
 
 .btn-logout:hover {
-    background: linear-gradient(135deg, #f8305d 0%, #f03e1e 100%);
-    box-shadow: 0 6px 16px rgba(255, 75, 43, 0.3);
+    background: var(--logout-hover);
+    color: #ffb3b3;
 }
 
-/* Enlaces de alternancia (ir a registrarse / iniciar sesión) */
+/* ==========================================================================
+   Footer del formulario
+   ========================================================================== */
 .form-footer {
-    margin-top: 20px;
+    margin-top: 22px;
     text-align: center;
-    font-size: 14px;
-    color: #718096;
+    font-size: 13px;
+    color: var(--text-secondary);
+    font-family: 'Segoe UI', sans-serif;
 }
 
 .form-footer a {
-    color: #764ba2;
+    color: var(--accent);
     text-decoration: none;
-    font-weight: 600;
+    font-weight: 500;
 }
 
 .form-footer a:hover {
-    color: #667eea;
+    color: #3dbde6;
     text-decoration: underline;
 }
 
 /* ==========================================================================
-   Imágenes y Multimedia (Códigos QR)
+   Imágenes / QR
    ========================================================================== */
 img {
     max-width: 100%;
     height: auto;
-    border-radius: 12px;
-    border: 1px solid #e2e8f0;
-    padding: 12px;
-    background: #f8fafc;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    padding: 10px;
+    background: #ffffff;
+    box-shadow: 0 4px 16px rgba(0, 0, 0, 0.4);
 }
